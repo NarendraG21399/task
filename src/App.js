@@ -1,25 +1,32 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import marked from 'marked';
 
+import './App.css';
+ 
 function App() {
+  const [markdown, setmarkdown]= useState('');
+
+  const updatMarkdown = (value)=>{
+    setmarkdown(value)
+  };
+ const  rawMarkup = () => {
+  
+    let rawMarkup = marked(markdown);
+    return { __html: rawMarkup };
+  }
   return (
+
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+       <div className="form-group">
+    <label  >markdown input</label>
+    <input type="text" className="form-control"  placeholder="Enter email" value={markdown} onChange={(event)=>{  updatMarkdown(event.target.value)}}/>
+  </div>
+  <div>
+    <h2>markdown output</h2>
+    <div dangerouslySetInnerHTML={rawMarkup()} ></div>
     </div>
+  </div>
+  
   );
 }
 
